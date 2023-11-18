@@ -7,12 +7,12 @@
     "mysql2": "^3.6.3"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "name": "20.1.2.ultimos_detalles_api",
   "description": "",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "author": "",
   "license": "ISC"
 }
