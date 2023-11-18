@@ -17,9 +17,9 @@ function login() {
         } else {
           errorMensaje.classList.remove("d-none");
           setTimeout(function () {
-            errorMensaje.classList.add("d-none");
+              errorMensaje.classList.add("d-none");
           }, 2000);
-        }
+      }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -29,19 +29,13 @@ function login() {
       });
   }
 
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     const loginButton = document.getElementById("login-button");
-
+  
     loginButton.addEventListener("click", function () {
       login();
     });
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
-    var logueado = localStorage.getItem("Logueado");
-  
-    if (logueado === "true") {
-      window.location.href = "home.html";
-    }
-  });
+ 
 

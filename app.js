@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const mysql = require('mysql2/promise');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 const pool = mariadb.createPool({
     host: "localhost",
@@ -15,6 +16,10 @@ const pool = mariadb.createPool({
 });
 
 const app = express();
+
+// Habilita CORS para todas las rutas
+app.use(cors());
+
 const port = 3000;
 
 app.use(bodyParser.json());
@@ -108,25 +113,27 @@ app.delete("/users/:id", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    const rows = await conn.query(
-      "SELECT id, username, password FROM users WHERE username=? AND password=?",
-      [req.body.username, req.body.password]
-    );
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query(
+            "SELECT id, username, password FROM users WHERE username=? AND password=?",
+            [req.body.username, req.body.password]
+        );
 
-    if (rows.length > 0) {
-      res.json({ success: true, message: "Inicio de sesión exitoso" });
-    } else {
-      res.status(401).json({ success: false, message: "Credenciales incorrectas" });
+        if (rows.length > 0) {
+            const user = rows[0];
+            const token = jwt.sign({ id: user.id, username: user.username }, secretKey, { expiresIn: '1h' });
+            res.json({ success: true, message: "Inicio de sesión exitoso", token });
+        } else {
+            res.status(401).json({ success: false, message: "Credenciales incorrectas" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Se rompió el servidor" });
+    } finally {
+        if (conn) conn.release();
     }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Se rompió el servidor" });
-  } finally {
-    if (conn) conn.release();
-  }
 });
 
 app.use(express.static(path.join(__dirname)));
