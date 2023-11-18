@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const mysql = require('mysql2/promise');
 const fs = require('fs');
+const path = require('path');
 
 const pool = mariadb.createPool({
     host: "localhost",

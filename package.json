@@ -4,13 +4,14 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mariadb": "^3.2.2",
-    "mysql2": "^3.6.3"
+    "mysql2": "^3.6.3",
+    "path": "^0.12.7"
   },
   "scripts": {
     "start": "node app.js"
   },
   "name": "20.1.2.ultimos_detalles_api",
-  "description": "",
+  "description": "Pautas:\r Para este taller solicitamos que pienses e implementes un proyecto, el que quieras 😎, en el que apliques lo que has aprendido hasta el momento sobre NodeJS. Es importante que cumpla las siguientes pautas:",
   "version": "1.0.0",
   "main": "app.js",
   "author": "",
